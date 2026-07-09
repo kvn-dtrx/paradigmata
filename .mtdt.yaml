@@ -1,0 +1,7 @@
+project:
+  name: Paradigmata
+  description: A reference collection of repository structure paradigms for LLM agents
+  github: https://github.com/kvn-dtrx/paradigmata
+  authors:
+    - name: Kvn Dtrx
+      mail: kvn.dtrx+git@protonmail.ch
