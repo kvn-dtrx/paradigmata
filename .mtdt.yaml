@@ -1,7 +1,12 @@
 project:
+  id: 4549361d-fd27-4048-9959-ccde251c34f7
   name: Paradigmata
-  description: A reference collection of repository structure paradigms for LLM agents
-  github: https://github.com/kvn-dtrx/paradigmata
+  description: >-
+    Repository layout paradigms and writing conventions for LLM agents
   authors:
-    - name: Kvn Dtrx
-      mail: kvn.dtrx+git@protonmail.ch
+  - name: Kvn Dtrx
+    mail: kvn.dtrx+git@protonmail.ch
+  license: null
+  github:
+    url: https://github.com/kvn-dtrx/paradigmata
+    visibility: public
