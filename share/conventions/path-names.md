@@ -82,6 +82,43 @@ File extensions should always be typed in lower-case letters. This is not just a
 
 ## Specific File and Directory Names
 
+### Repositories (stem vs role suffix)
+
+Prefer a **discoverable pair**: stem left, role as a **suffix**. Do not mix a `my-` prefix with suffixes.
+
+| Role | Name shape | Examples |
+|------|------------|----------|
+| Reusable tool / class / library | `<stem>` | `owl-card`, `fancter`, `dia-project`, `backup-tools` |
+| Personal 1:1 instantiation of **one** package/template | `<stem>-inst` | `owl-card-inst`, `obitanus-abitonus-inst` |
+| Hygiene annex (keeps the stem clean: shared snippets, private ops layout, …) | `<stem>-annex` | `dia-project-annex`, `backup-tools-annex` |
+| Wrap / config around a **third-party** stem | `<stem>-wrap` | `reveal-js-wrap` |
+| Operational workspace for a **data/content** stem | `<stem>-space` | `contacts-space`, `calendar-space`, `kleides-space`, `mails-space`, `yt-channels-space` |
+| Work product without a dedicated workspace repo | Domain content name (no role suffix) | `korrespondenzen` |
+| Secrets / host inventory | Dedicated private repo | `krypta` |
+
+Which repo is suffix-free depends on the pair:
+
+| Pair | Suffix-free stem | Satellite |
+|------|------------------|-----------|
+| Package ↔ fills | tool (`owl-card`) | `-inst` |
+| Engine ↔ hygiene library | product (`dia-project`) | `-annex` |
+| Upstream ↔ your config | *(upstream name; often not cloned)* | `-wrap` |
+| Data/content ↔ workspace | data (`contacts`, `calendar`, `kleides`, `mails`, `yt-channels`) | `-space` |
+
+Rules of thumb:
+
+- Use `-inst` only for thin, personal fills of **your** package/template (same stem). Not for arbitrary data a workspace merely manages.
+- Use `-annex` when material is split out so the **stem stays clean** — shared embed/snippet libraries (`share/`-style, as with `dia-project-annex`) *or* private operational layout the stem must not carry (host maps under `config/`, …). Same motive: stem remains the product; the annex has no independent purpose. Not for personal package fills (`-inst`) or data↔workspace pairs (`-space`).
+
+- Use `-wrap` when the stem names a **third-party** project and the repo is your config or thin adaptation (`reveal-js-wrap`, not `reveal-js` and not `reveal-js-inst`).
+- Use `-space` when the valuable stem is **data/content** and the sibling repo is the operational workspace (Make, sync scripts, local conventions) — e.g. `contacts` + `contacts-space`. The workspace is not an instantiation of a package.
+- Prefer a bare domain name when the repo is the work product and has **no** paired workspace (`korrespondenzen`).
+- Do not stack role suffixes (`…-inst-annex`, `…-space-inst`).
+- Record the link in `.mtdt.yaml` / README when the pair is not obvious from the name.
+- Privacy belongs in forge visibility (`private`), not in a name prefix.
+- Deprecated: `my-<tool>` and free descriptive seconds (`dia-resources`, `contact-management`, `esa-management`, `mail-management`, `esa-space`, `youtube-workspace`). Migrate to `<stem>-inst` / `<stem>-annex` / `<stem>-wrap` / `<stem>-space`.
+- Display `project.name` should derive to the slug (e.g. `Owl Card Inst` → `owl-card-inst`, `Dia Project Annex` → `dia-project-annex`, `Reveal Js Wrap` → `reveal-js-wrap`, `Contacts Space` → `contacts-space`, `Mails Space` → `mails-space`).
+
 ### Private Photos
 
 - The pattern of the file name is `${DATE}--${TITLE}==${INDEX}.${EXTENSION}`.

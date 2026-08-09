@@ -68,7 +68,10 @@ Regardless of the number of spaces used for one level of indentation in the body
 ## Comments
 
 - A comment annotating a single piece of code (often just a line) has to be put directly above this piece of code, i.e. there should not be any blank lines between them.
-- Preferably, a comment annotating a single piece of code should be written in descriptive style (e.g. "Creates …") with omitted subject and not in an imperative style (e.g. "Create …")[^pep-exception]. Nevertheless, such comments should end with a full stop. The same rules apply also to annotations such as TODO, NOTE, WARNING, etc.
+- Preferably, a comment annotating a single piece of code should be written in descriptive style (e.g. "Creates …") with omitted subject and not in an imperative style (e.g. "Create …")[^pep-exception]. The same style applies to annotations such as TODO, NOTE, WARNING, etc.
+- **Full stops:** If the comment is a single sentence, do **not** end it with a full stop. Use full stops only when the comment contains more than one sentence (ordinary sentence punctuation between and after those sentences).
+    - One sentence: `# Shows available recipes`
+    - Several sentences: `# Resolves the query. Prefers review over staged.`
 
 [^pep-exception]: There are exceptions like the docstring of Python or Emacs Lisp functions.
 

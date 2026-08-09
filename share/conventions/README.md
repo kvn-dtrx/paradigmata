@@ -24,7 +24,7 @@ edit files — independent of which repository paradigm you chose under
 | `makefile.md` | Make syntax and standard target names |
 | `conventional-commits.md` | Commit message format |
 | `variable-names.md` | Identifiers in code |
-| `latex.md` | Additional rules for `.tex` |
+| `latex.md` | `.tex` style, repo layout, `.latexmkrc`, `tex-compile.sh` |
 | `audio-tags.md` | Audio tags, covers, album paths |
 
 ## Relationship to templates

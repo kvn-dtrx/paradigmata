@@ -37,6 +37,22 @@ foo:
 
 Across `~/data/projects`, Make is for setup/install (system paths, venv, stubs, config deploy). Recurring ops and document builds belong in a `justfile` (`just --list`).
 
+### Justfile recipe comments
+
+Recipe (and variable) comments follow [plain-text.md](plain-text.md): one descriptive line directly above the recipe, omitted subject. A single-sentence comment has **no** trailing full stop; full stops appear only in multi-sentence comments.
+
+```just
+# Shows available recipes
+default:
+    @just --list --unsorted
+
+# Builds the main PDF document
+build:
+    …
+```
+
+Do not use imperative one-liners (`# Show …`, `# Build …`).
+
 Standard target names when Make is used:
 
 ```yaml
