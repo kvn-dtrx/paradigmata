@@ -12,19 +12,21 @@ edit files — independent of which repository paradigm you chose under
    - Git commit messages → `conventional-commits.md`
    - Identifiers in code → `variable-names.md`
    - `.tex` sources → `latex.md`
+   - User vs repo tool config → `tooling-locus.md`
    - Audio metadata / library layout → `audio-tags.md`
 3. Prefer these rules over improvising local style.
 
 ## Index
 
 | File | Scope |
-|------|--------|
+| --- | --- |
 | `plain-text.md` | Encoding, headers, comments, trailing newlines |
 | `path-names.md` | File and directory names |
 | `makefile.md` | Make syntax and standard target names |
 | `conventional-commits.md` | Commit message format |
 | `variable-names.md` | Identifiers in code |
 | `latex.md` | `.tex` style, repo layout, `.latexmkrc`, `tex-compile.sh` |
+| `tooling-locus.md` | Where configs live (user / repo / XDG cache): latexindent, gitignore, … |
 | `audio-tags.md` | Audio tags, covers, album paths |
 
 ## Relationship to templates

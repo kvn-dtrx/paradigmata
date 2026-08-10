@@ -36,7 +36,7 @@ paradigm.
 Each template example needs at least:
 
 | File | Content |
-|------|---------|
+| --- | --- |
 | `README.md` | Synopsis, directory tree, conventions |
 | Minimal file structure | Illustrative, runnable, or stub files |
 

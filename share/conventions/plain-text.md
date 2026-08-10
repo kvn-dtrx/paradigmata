@@ -84,4 +84,14 @@ Regardless of the number of spaces used for one level of indentation in the body
 The general format is:
 `[Comment Character(s)] [MARKER]: [Short sentence, possible paragraph]`
 
+## Configuration Values
+
+- Document each configuration value in comments directly above the setting.
+- For Boolean values, use a single descriptive comment beginning with “Whether to”.
+- For integer or string values with a fixed set of possibilities, introduce the
+  setting with a comment ending in “possible values:” and list every supported
+  value on the following comment lines as `${VALUE} = ${EFFECT}`.
+- Keep the selected value directly below its documentation block so that the
+  available choices and the active choice remain visible together.
+
 [^bmtbk-earlier]: In earlier times, BMTBK was used: *beyond my totally bounded knowledge*.

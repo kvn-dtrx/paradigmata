@@ -87,7 +87,7 @@ File extensions should always be typed in lower-case letters. This is not just a
 Prefer a **discoverable pair**: stem left, role as a **suffix**. Do not mix a `my-` prefix with suffixes.
 
 | Role | Name shape | Examples |
-|------|------------|----------|
+| --- | --- | --- |
 | Reusable tool / class / library | `<stem>` | `owl-card`, `fancter`, `dia-project`, `backup-tools` |
 | Personal 1:1 instantiation of **one** package/template | `<stem>-inst` | `owl-card-inst`, `obitanus-abitonus-inst` |
 | Hygiene annex (keeps the stem clean: shared snippets, private ops layout, …) | `<stem>-annex` | `dia-project-annex`, `backup-tools-annex` |
@@ -99,7 +99,7 @@ Prefer a **discoverable pair**: stem left, role as a **suffix**. Do not mix a `m
 Which repo is suffix-free depends on the pair:
 
 | Pair | Suffix-free stem | Satellite |
-|------|------------------|-----------|
+| --- | --- | --- |
 | Package ↔ fills | tool (`owl-card`) | `-inst` |
 | Engine ↔ hygiene library | product (`dia-project`) | `-annex` |
 | Upstream ↔ your config | *(upstream name; often not cloned)* | `-wrap` |
