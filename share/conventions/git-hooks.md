@@ -31,9 +31,9 @@ clone path; use the installed libexec tree after `make install` in Repolicy.
 One file per hook type next to the entry executable, tab-separated:
 
 ```text
-# kind	target	args
-cli	sanitise-text	--staged
-rule	shellcheck-clean.bash
+# kind<TAB>target<TAB>args
+cli<TAB>sanitise-text<TAB>--staged
+rule<TAB>shellcheck-clean.bash<TAB>
 ```
 
 | kind | target | Notes |
