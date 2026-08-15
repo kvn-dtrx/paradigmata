@@ -119,6 +119,53 @@ Rules of thumb:
 - Deprecated: `my-<tool>` and free descriptive seconds (`dia-resources`, `contact-management`, `esa-management`, `mail-management`, `esa-space`, `youtube-workspace`). Migrate to `<stem>-inst` / `<stem>-annex` / `<stem>-wrap` / `<stem>-space`.
 - Display `project.name` should derive to the slug (e.g. `Owl Card Inst` → `owl-card-inst`, `Dia Project Annex` → `dia-project-annex`, `Reveal Js Wrap` → `reveal-js-wrap`, `Contacts Space` → `contacts-space`, `Mails Space` → `mails-space`).
 
+### `.gitkeep`
+
+Placeholder files that keep otherwise empty (or fully gitignored) directories
+in the tree are named **`.gitkeep`**. When the directory’s contents are
+ignored (e.g. `mnt/*`, `build/*`), **force-add** the placeholder — do not
+un-ignore it with a `!` exception:
+
+```bash
+git add -f path/to/.gitkeep
+```
+
+Avoid patterns such as `dir/*` plus `!dir/.gitkeep` (double negation).
+
+### Space repo data mount (`mnt/`)
+
+Every `<stem>-space` checkout keeps a top-level **`mnt/`** directory so the
+paired data stem can be opened *inside* the space tree (e.g. Cursor/VS Code)
+without merging the two git histories.
+
+| Path | Tracked? | Role |
+| --- | --- | --- |
+| `mnt/.gitkeep` | yes (`git add -f`) | keeps the mount point in git |
+| `mnt/data` | no (symlink) | typical single data-stem mount |
+| `mnt/<stem>` | no (symlink) | named mount when several collections share one space (e.g. `notes-space`) |
+
+Rules:
+
+- Name the directory **`mnt`** (not `mount`, `data-mount`, …).
+- Ignore local mounts in `.gitignore` with a single rule (no `!` exception):
+
+  ```gitignore
+  mnt/*
+  ```
+
+  Then: `git add -f mnt/.gitkeep`.
+- Prefer `mnt/data` when the space has exactly one paired data stem; use
+  `mnt/<stem>` (matching the data checkout basename) when several stems mount
+  into the same space.
+- Do **not** put the data checkout itself under XDG for this purpose; the
+  mount lives in the space repo. (Domain-specific XDG roots such as
+  `mails-space`’s Maildir layout are unrelated.)
+- Tooling may create/refresh the symlink (meta-project `mount-space`); the
+  mapping of space → data lives in private meta-project-annex
+  `src/mtdt/space-mounts.yaml` (keyed by space `project.id`; use `links:` for
+  several mounts). The path convention above is independent of that catalog.
+- Opening the space repo is enough: mounted stems appear under `mnt/`.
+
 ### Private Photos
 
 - The pattern of the file name is `${DATE}--${TITLE}==${INDEX}.${EXTENSION}`.

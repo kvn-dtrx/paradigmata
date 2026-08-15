@@ -56,7 +56,6 @@ Multi-document consumer repos ship `bin/tex-compile.sh` as a dia embed from dia-
 
 Notes collections also embed `bin/resolve-note` from `scripts/resolve-note.sh` (partial query → `.tex` stem; buckets via `TEX_NOTES_MOUNT` / `TEX_NOTES_SRC` / optional `TEX_NOTES_BUCKETS`).
 
-
 Host file shape (whole-file pull via `dia:file`; snippet includes the shebang):
 
 ```sh
@@ -150,25 +149,26 @@ Driver rules:
 
 justfiles / Make should call `bin/tex-compile.sh` rather than re-encoding latexmk flags.
 
-## Repository Roles
+## TeX trees
 
-Two roles, two folder names — do not mix `examples/` and document source under one vocabulary. The name `instantiations/` is obsolete.
+How `src/` vs `share/` is decided (work/system vs resource stock) is in [src-vs-share.md](src-vs-share.md). Below is the TeX tree only. Do not mix `examples/` and document source. The name `instantiations/` is obsolete.
 
 ### Package examples (Fancter)
 
 ```text
 pkg-*/
   .latexmkrc
-  src/wire/…              # cls / sty
+  src/<pkg>/              # cls / sty — this *is* the work (TDS basename; not src/wire/)
   examples/
     <slug>/main.tex       # one demo per directory
-    shared/               # optional shared demo inputs
+    share/                # optional data the demos load (not shared/)
   build/
 ```
 
 - Entry file is always `main.tex`.
+- Package sources live at `src/<pkg>/` (TDS basename), not under `src/wire/`.
 - Compile with `latexmk -cd -r .latexmkrc -jobname=<slug> examples/<slug>/main.tex` so parallel demos do not collide in `build/main.*`.
-- Dia stack: `base` + `out-dir/build` + `texinputs/examples-pkg` (+ engine). Optional `examples/shared/` is on TEXINPUTS via that snippet.
+- Dia stack: `base` + `out-dir/build` + `texinputs/examples-pkg` (+ engine). Optional `examples/share/` is on TEXINPUTS via that snippet (`examples/shared/` is a legacy alias).
 
 ### Document / consumer source
 
@@ -176,16 +176,16 @@ pkg-*/
 doc-*/
   .latexmkrc
   bin/tex-compile.sh      # multi-document collections (dia embed)
-  src/                    # real documents (was instantiations/)
+  src/                    # the documents (the work)
     main.tex              # or src/<slug>/main.tex
     running/ …            # optional lifecycle buckets
     archive/ …
-  share/…                 # optional styles / bib / assets (not shared/)
+  share/…                 # data the documents load: styles, bib, assets
   build/
 ```
 
 - Document trees use `src/`, not `examples/` (demos belong only to packages).
-- Styles live under `share/` (name `shared/` is obsolete for this role).
+- `share/styles` and `share/bib` are data, including when there is only one `src/main.tex`. The name is not `shared/`.
 - Dia stack: `base` + `out-dir/build` + `texinputs/document-root` + engine (`lualatex` unless overridden).
 - Thesis layout below is the single-document special case of this role.
 
@@ -202,6 +202,7 @@ thesis-*/
 ```
 
 - `.latexmkrc` lives at the repo root for convention/discoverability. Compile with `latexmk -cd -r .latexmkrc src/main.tex` (after `-cd`, cwd is `src/`, so pass the root rc explicitly via `-r`).
+- `share/styles/` and `share/bib/` are data the document loads, not a second source tree.
 - Dia stack: `base` + `out-dir/build` + `texinputs/document-root` (+ `bibinputs/share-bib` when needed) + engine.
 
 ## White Spaces

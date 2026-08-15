@@ -79,3 +79,63 @@ from = src/wire
 root = "${MY_LOCAL_HOME}/libexec/example"
 mode = symlink
 ```
+
+## ShellCheck
+
+Scripts under `*.sh` / `*.bash` / `*.zsh` must stay clean under [ShellCheck](https://www.shellcheck.net/). Prefer fixing the code; do not silence findings casually.
+
+### Invocation
+
+ShellCheck dialects are `sh`, `bash`, `dash`, `ksh` (and busybox) — **there is no `zsh` dialect**. Check Bourne-like scripts as bash (or `sh` when strictly POSIX):
+
+```sh
+shellcheck --exclude=SC1103 --shell=bash -- **/*.bash **/*.sh **/*.zsh
+```
+
+`SC1103` (prefer `source` over `.`) is excluded project-wide: we keep `.` for POSIX-friendly sourcing.
+
+User-wide Git pre-commit (Dotfiles `repolicy/pre-commit.tsv` → Repolicy Git adapter → `shellcheck-clean.bash`) runs the same flags on **staged** `*.sh` / `*.bash` / `*.zsh`. Install `shellcheck` on `PATH`; if missing, the check skips with a warning. Hook layering: [git-hooks.md](git-hooks.md).
+
+For **zsh-only** syntax (`${(q)…}`, `always {…}`, anonymous `() {…}` hooks, …), ShellCheck will misparse under bash. Either:
+
+1. rewrite to a bash-checkable shape when easy, or
+2. disable the specific codes with an explicit **zshism** reason (below)
+
+Do not pretend `# shellcheck shell=zsh` works — it is not a valid dialect.
+
+### Empty prefix assignments (`SC1007`)
+
+Clear an env var for one command with an explicit empty string:
+
+```sh
+# Good
+repo="$(CDPATH='' cd -- "$(dirname "${0}")/.." && pwd)"
+
+# Bad — ShellCheck SC1007
+repo="$(CDPATH= cd -- "$(dirname "${0}")/.." && pwd)"
+```
+
+### Disabling a rule
+
+When a finding is intentional and cannot be rewritten cleanly, disable **narrowly** and **name the reason** on the same directive line (or the next comment line). Never leave a bare disable.
+
+```sh
+# shellcheck disable=SC1091
+. "${repo}/.env"
+
+# shellcheck disable=SC2034
+EXPORT_ONLY="${value}"
+
+# shellcheck disable=SC2296
+query="${(qqq)LBUFFER}"
+```
+
+Prefer:
+
+1. Fix the code
+2. File- or function-scoped `# shellcheck disable=SCxxxx  # reason`
+3. Next-line disable only for a single statement
+
+**Infos/notes** (SC1091, SC2016, SC2086, …) are not ignored by default — silence them the same way with an explicit reason (e.g. `dynamic source; not shipped as input`, `intentional single-quoted trap/remote template`).
+
+Do **not** use `# shellcheck disable=all`. Do **not** disable without a short reason. Rule breaks that exist only because the file is zsh must say `zshism:` in the reason. Helper libraries that assign variables for sourced consumers may disable SC2034 with `for sourced consumers` when ShellCheck is run without `-x`.

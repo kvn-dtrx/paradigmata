@@ -4,9 +4,13 @@ project:
   description: >-
     Repository layout paradigms and writing conventions for LLM agents
   authors:
-  - name: Kvn Dtrx
-    mail: kvn.dtrx+git@protonmail.ch
-  license: null
+    - name: Kvn Dtrx
+      mail: kvn.dtrx+git@protonmail.ch
+  license:
+    type: MIT
+    year: 2026
+    file: LICENSE.txt
+forges:
   github:
     url: https://github.com/kvn-dtrx/paradigmata
     visibility: public

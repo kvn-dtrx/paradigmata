@@ -78,6 +78,7 @@ Do not:
 | Shell / `wire.ini` | `shell.md` |
 | YAML listings | `yaml.md` |
 | LaTeX | `latex.md` |
+| Public vs private history | `public-private-hygiene.md` |
 | Audio library/tags | `audio-tags.md` |
 
 ## Examples

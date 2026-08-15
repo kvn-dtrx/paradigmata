@@ -6,20 +6,15 @@ when creating or editing repositories.
 
 ## Workflow: building a new repo
 
-1. **Load conventions** — read `share/conventions/README.md`, then at least
-   `plain-text.md` and `path-names.md` (plus topic files you will need)
-2. **Choose a paradigm** — pick a repo by purpose; note that `intersection`
-   holds what every repo needs and is not repeated in the other templates
-3. **Load context** — read all files under `share/templates/<paradigma>/`
-   fully, starting with `intersection/`
-4. **Adopt the structure** — use the directory tree and conventions of the
-   chosen example as your basis
-5. **Adapt** — change only what the specific use case requires; keep
-   established patterns
+1. **Load conventions** — read `share/conventions/README.md`, then at least `plain-text.md`, `path-names.md`, and `src-vs-share.md` (plus topic files you will need)
+2. **Choose a paradigm** — pick a repo by purpose; note that `intersection` holds what every repo needs and is not repeated in the other templates
+3. **Load context** — read all files under `share/templates/<paradigma>/` fully, starting with `intersection/`
+4. **Adopt the structure** — use the directory tree and conventions of the chosen example as your basis
+5. **Adapt** — change only what the specific use case requires; keep established patterns
 
 ## What you take from a paradigm
 
-- Directory layout (`src/`, `tests/`, `docs/`, …)
+- Directory layout (`src/`, `tests/`, `docs/`, …) — respect `src-vs-share.md` (work/system vs resource stock)
 - Configuration files and their minimal contents
 - Naming conventions (files, modules, branches)
 - README structure and documentation level
@@ -29,6 +24,7 @@ when creating or editing repositories.
 
 - How to format plain-text headers and comments
 - How to name files and directories
+- When to use `src/` vs `share/` (`src-vs-share.md`)
 - Standard Make targets and Make/Just split
 - Commit message shape
 - Identifier naming in code

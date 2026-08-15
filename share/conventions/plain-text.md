@@ -19,6 +19,26 @@
 
 [^markdown-trailing-spaces]: In Markdown files, two trailing white spaces are used to create a line break, i.e. they have the same effect as `<br>`.
 
+## Markdown Prose
+
+- Do **not** hard-wrap Markdown prose at a column width. A paragraph is one logical line (editors may soft-wrap for display); put a blank line between paragraphs.
+- Do **not** insert Markdown hard line breaks (two trailing spaces before a newline, or a bare `<br>`) in ordinary prose.
+- Structural newlines remain required for headings, list items, table rows, fenced code blocks, and blank lines that separate blocks.
+
+Wrong (column-wrapped paragraph):
+
+```markdown
+Sandbox for plain LaTeX experiments without project-specific document classes.
+Active scratch lives in `src/main.tex`; historical fragments sit under
+`src/snippets/`.
+```
+
+Right (one paragraph, one line):
+
+```markdown
+Sandbox for plain LaTeX experiments without project-specific document classes. Active scratch lives in `src/main.tex`; historical fragments sit under `src/snippets/`.
+```
+
 ## Header
 
 The header of a plain text file shall be in alignment with the following exemplary templates:
@@ -53,9 +73,19 @@ The header of a plain text file shall be in alignment with the following exempla
 
 Regardless of the number of spaces used for one level of indentation in the body of the file, the YAML syntax in the header uses indentation of two spaces.
 
-- Mandatory is the key **title**.
+Which key is required depends on the **kind** of file:
+
+| Kind | Required key | Typical files |
+|------|----------------|---------------|
+| **Document / config / data** | `title` | Markdown notes, `.gitignore`, `.envrc`, YAML/TOML/INI configs, data sidecars |
+| **Action script** (does work) | `description` | Shell/Python utilities, makers, cron wrappers, library helpers with logic |
+| **Thin wrapper script** | `title` *or* `description` | Short `exec`/alias stubs that only set env and forward |
+
+Do **not** require both. Prefer **only** the key that fits the kind (e.g. no `title:` on a normal action script).
+
 - Optional are keys such as **tags**, **created**, etc.
 - The value of the metadata key **title** should be in **Title Case**, e.g. `title: The Empire Strikes Back` if English and in **Standard Case**, e.g. `title: Das Imperium schlägt zurück` if German; other languages are not expected to occur, not even Klingon.
+- The value of the metadata key **description** is a short phrase or folded block (`>-`) stating what the script does, in descriptive style (same voice as code comments, see below).
 - The value of the metadata key **created** should be in the format `YYYY-MM-DD`, e.g. `created: 2026-05-24`.
 - The value of the metadata key **tags** should be a list of strings such as:
 
@@ -64,6 +94,30 @@ Regardless of the number of spaces used for one level of indentation in the body
       - foo
       - bar
     ```
+
+Examples:
+
+```sh
+# Action script
+# ---
+# description: >-
+#   Mirrors staged restic repos to the cloud remote
+# ---
+```
+
+```sh
+# Thin wrapper (title is enough)
+# ---
+# title: Dcd
+# ---
+```
+
+```yaml
+# Config / document front matter
+---
+title: Gitignore for Backup Tools
+---
+```
 
 ## Comments
 
