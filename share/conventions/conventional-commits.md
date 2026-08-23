@@ -15,6 +15,7 @@
 
 ## Type
 
+- `init`: Establishing the initial repository state.
 - `feat`: Introducing a new feature.
 - `fix`: Correcting a bug.
 - `docs`: Documentation-only changes.
@@ -23,6 +24,7 @@
 - `perf`: Improving performance.
 - `test`: Adding or updating tests.
 - `chore`: Tooling, config, or build changes.
+- `final`: Concluding a finished body of work.
 
 ## Scope \[optional\]
 

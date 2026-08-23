@@ -39,7 +39,7 @@ One root `.latexmkrc` per repository. Do not keep a second copy under `share/` /
 
 - PDF and auxiliary files go under the **repository root** `build/` (not next to the `.tex` cwd), via `latexmkrc/out-dir/build.pl`.
 - Root resolution (no `.git`):
-  1. `WIRE_ROOT` or `TEX_ROOT` if set (direnv / install stubs / just — same idea as wire)
+  1. explicit `TEX_ROOT` if set (for example by just)
   2. else walk up from cwd for `.mtdt.yaml`
   3. else relative `build/` with a warning
 - Prefer letting the out-dir snippet own `-outdir`/`-auxdir`; do not hard-code conflicting paths in justfiles or `tex-compile.sh`.
