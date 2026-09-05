@@ -28,9 +28,9 @@ The continuation of lines must be marked explicitly:
 
 ```makefile
 foo:
-	@for file in dir/to/files/*; do \
-		echo "$$(foo)" \
-	done
+ @for file in dir/to/files/*; do \
+  echo "$$(foo)" \
+ done
 ```
 
 ## Conventions for Targets
@@ -68,10 +68,10 @@ Keep the alias visible and recipe-free:
 install: install-user ## Alias for install-user
 
 install-user: ## Symlinks commands into ~/.local/bin
-	@python3 bin/make-wire.py "$(CURDIR)"
+ @python3 bin/make-wire.py "$(CURDIR)"
 
 setup-dev: ## Installs repository-local Git hooks
-	@bin/install-git-hooks.sh
+ @bin/install-git-hooks.sh
 ```
 
 These targets describe ownership, not materialisation. An `install-user` target

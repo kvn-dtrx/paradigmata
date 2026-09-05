@@ -35,7 +35,6 @@ def find_project_root(start: Path) -> Path:
             return directory
     raise FileNotFoundError(f"No .mtdt.yaml found above {start}")
 
-
 project_root = find_project_root(Path.cwd())
 ```
 
