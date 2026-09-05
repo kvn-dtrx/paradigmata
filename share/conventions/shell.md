@@ -80,6 +80,31 @@ root = "${MY_LOCAL_HOME}/libexec/example"
 mode = symlink
 ```
 
+## Project-root discovery
+
+Use `.mtdt.yaml` as the project-root anchor. Walk upwards locally so root
+discovery does not add a dependency on Git or a project-specific command:
+
+```sh
+find_mtdt_root() (
+    start="${1:-${PWD}}"
+    root="$(CDPATH='' cd -- "${start}" 2> /dev/null && pwd -P)" || return 1
+    while [ ! -f "${root}/.mtdt.yaml" ]; do
+        parent="$(dirname "${root}")"
+        [ "${parent}" != "${root}" ] || return 1
+        root="${parent}"
+    done
+    printf '%s\n' "${root}"
+)
+
+project_root="$(find_mtdt_root "${script_dir}")"
+```
+
+Do not use `git rev-parse --show-toplevel` merely to locate project files. A
+project checkout need not be an active Git worktree. Git-root discovery remains
+appropriate only when the Git worktree itself is the object being inspected,
+for example in generic Git tooling or repository-export logic.
+
 ## ShellCheck
 
 Scripts under `*.sh` / `*.bash` / `*.zsh` must stay clean under [ShellCheck](https://www.shellcheck.net/). Prefer fixing the code; do not silence findings casually.
@@ -94,7 +119,7 @@ shellcheck --exclude=SC1103 --shell=bash -- **/*.bash **/*.sh **/*.zsh
 
 `SC1103` (prefer `source` over `.`) is excluded project-wide: we keep `.` for POSIX-friendly sourcing.
 
-User-wide Git pre-commit (Dotfiles `repolicy/pre-commit.tsv` → Repolicy Git adapter → `shellcheck-clean.bash`) runs the same flags on **staged** `*.sh` / `*.bash` / `*.zsh`. Install `shellcheck` on `PATH`; if missing, the check skips with a warning. Hook layering: [git-hooks.md](git-hooks.md).
+User-wide Git pre-commit (Dotfiles `repolicy/pre-commit.tsv` → `check-shell --staged`) runs the same flags on **staged** `*.sh` / `*.bash` / `*.zsh`. Install `shellcheck` on `PATH`; if missing, the check skips with a warning. Hook layering: [git-hooks.md](git-hooks.md).
 
 For **zsh-only** syntax (`${(q)…}`, `always {…}`, anonymous `() {…}` hooks, …), ShellCheck will misparse under bash. Either:
 

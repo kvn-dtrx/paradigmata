@@ -33,7 +33,8 @@ One file per hook type next to the entry executable, tab-separated:
 ```text
 # kind<TAB>target<TAB>args
 cli<TAB>sanitise-text<TAB>--staged
-rule<TAB>shellcheck-clean.bash<TAB>
+cli<TAB>check-shell<TAB>--staged
+cli<TAB>check-python<TAB>--staged
 ```
 
 | kind | target | Notes |

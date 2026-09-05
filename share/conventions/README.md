@@ -19,6 +19,7 @@ edit files — independent of which repository paradigm you chose under
    - Top-level `src/` vs `share/` (work/system vs resource stock) → `src-vs-share.md`
    - Shell / ShellCheck → `shell.md`
    - Native Git hooks / TSV catalogs → `git-hooks.md`
+   - URLs and archived links → `urls.md`
 3. Prefer these rules over improvising local style.
 
 ## Index
@@ -38,6 +39,7 @@ edit files — independent of which repository paradigm you chose under
 | `audio-tags.md` | Audio tags, covers, album paths |
 | `shell.md` | Shell bracing/quoting; ShellCheck dialect, disables, SC1007 |
 | `git-hooks.md` | Native hooks, `core.hooksPath`, and Dotfiles policy through Repolicy |
+| `urls.md` | Canonical URLs, trailing slashes, archived and opaque links |
 
 ## Relationship to templates
 

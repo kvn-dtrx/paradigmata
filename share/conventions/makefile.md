@@ -37,6 +37,54 @@ foo:
 
 Across `~/data/projects`, Make is for setup/install (system paths, venv, stubs, config deploy). Recurring ops and document builds belong in a `justfile` (`just --list`).
 
+### Installation taxonomy
+
+Installation targets describe their destination and audience:
+
+```yaml
+- name: install
+  description: >-
+    Compatibility alias for `install-user`. It contains no installation recipe
+    of its own.
+- name: install-user
+  description: >-
+    Deploys runtime files into the current user's environment, such as XDG,
+    TEXMFHOME, or ~/.local. Copy versus symlink is repository or mount policy.
+- name: setup-dev
+  description: >-
+    Prepares checkout-local development state, such as an editable virtual
+    environment or Git hooks. It never deploys user or root files.
+- name: install-root
+  description: >-
+    Deploys files owned by root or into root-controlled paths and may require
+    elevated privileges. It is always explicit.
+```
+
+Keep the alias visible and recipe-free:
+
+```makefile
+.PHONY: install install-user setup-dev
+
+install: install-user ## Alias for install-user
+
+install-user: ## Symlinks commands into ~/.local/bin
+	@python3 bin/make-wire.py "$(CURDIR)"
+
+setup-dev: ## Installs repository-local Git hooks
+	@bin/install-git-hooks.sh
+```
+
+These targets describe ownership, not materialisation. An `install-user` target
+may copy or symlink according to the repository's `wire.ini`; expose a separate
+mode override only when both lifecycles are genuinely supported. `setup-dev`
+owns only checkout-local state and is therefore not an installation variant.
+Run `install-user` and `setup-dev` explicitly when both are wanted.
+
+There is deliberately no universal `install-all`: composing destinations hides
+side effects and makes privileged installation too easy to trigger. Root-only
+repositories omit `install` rather than weakening its invariant; root actions
+must be requested through an explicitly named `install-root*` target.
+
 ### Justfile recipe comments
 
 Recipe (and variable) comments follow [plain-text.md](plain-text.md): one descriptive line directly above the recipe, omitted subject. A single-sentence comment has **no** trailing full stop; full stops appear only in multi-sentence comments.
@@ -67,7 +115,16 @@ Standard target names when Make is used:
     Performs the principal project tasks, e.g., compilation, scripts, data transformations. Should not modify system paths or deploy artefacts.
 - name: install
   description: >-
-    Makes executables or scripts available, either by copying or creating symbolic links
+    Alias for `install-user`
+- name: install-user
+  description: >-
+    Makes executables or scripts available to the current user, either by copying or creating symbolic links
+- name: setup-dev
+  description: >-
+    Prepares repository-local development state
+- name: install-root
+  description: >-
+    Installs into root-owned paths or services
 - name: all
   description: >-
     Runs `setup`, `apply`, and `install` in sequence
